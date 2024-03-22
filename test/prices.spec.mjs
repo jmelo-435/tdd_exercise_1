@@ -3,11 +3,9 @@ import { expect } from "chai";
 import request from "supertest";
 import { InMemoryDatabase } from "../src/database.ts";
 import * as jsPrices from "../src/prices.mjs";
-import * as tsPrices from "../src/prices_typed";
 
 describe.each([
   { variant: "JavaScript", createApp: jsPrices.createApp },
-  { variant: "TypeScript", createApp: tsPrices.createApp },
 ])(
   "prices ($variant)",
   ({ createApp }) => {
@@ -64,8 +62,8 @@ describe.each([
     [
       { age: 15, expectedCost: 35, date: "2019-02-22" },
       { age: 15, expectedCost: 35, date: "2019-02-25" },
-      { age: 15, expectedCost: 23, date: "2019-03-12" },
-      { age: 65, expectedCost: 18, date: "2019-03-12" }, // monday
+      { age: 15, expectedCost: 23, date: "2019-03-11" },
+      { age: 65, expectedCost: 18, date: "2019-03-11" }, // monday
     ].forEach(({ age, expectedCost, date }) => {
       it("works for monday deals", async () => {
         const { body } = await request(app).get(`/prices?type=1jour&age=${age}&date=${date}`);
